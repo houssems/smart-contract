@@ -1,0 +1,70 @@
+<h2 class="page-header">Dashboard</h2>
+<p>Welcome to Smart Contract</p>
+
+<form action="/contract/add" method="post" enctype="multipart/form-data" id="js-upload-form">
+
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" type="text" class="form-control" name="Title" placeholder="Title..." required>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="Description" class="form-control" placeholder="Description..." rows="5" required></textarea>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Upload Contract File</strong>
+            <small>(DOC, PDF)</small>
+        </div>
+
+        <div class="panel-body">
+            <!-- Standar Form -->
+            <h4>Select file from your computer</h4>
+            <!--<div class="form-inline">-->
+                <div class="form-group">
+                    <input type="file" name="file" id="js-upload-files">
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
+            </div>
+
+            <!-- Drop Zone -->
+            <h4>Or drag and drop files below</h4>
+            <div class="upload-drop-zone" id="drop-zone">
+                Just drag and drop files here
+            </div>
+
+            <!-- Progress Bar -->
+            <!--<div class="progress">-->
+                <!--<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"-->
+                     <!--style="width: 60%;">-->
+                    <!--<span class="sr-only">60% Complete</span>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!-- Upload Finished -->
+            <!--<div class="js-upload-finished">-->
+                <!--<h3>Processed files</h3>-->
+                <!--<div class="list-group">-->
+                    <!--<a href="#" class="list-group-item list-group-item-success"><span-->
+                            <!--class="badge alert-success pull-right">Success</span>contract.doc</a>-->
+                    <!--<a href="#" class="list-group-item list-group-item-success"><span-->
+                            <!--class="badge alert-success pull-right">Success</span>contract1.pdf</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Signatories</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="signataires-list" multiple="multiple">
+                <option value="test">Test</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary btn-lg btn-block btn-signataires-list">Submit</button>
+        </div>
+    </div>
+
+</form>
