@@ -15,7 +15,7 @@
 
     uploadForm.addEventListener('submit', function(e) {
         var uploadFiles = document.getElementById('js-upload-files').files;
-        e.preventDefault();
+        // e.preventDefault();
 
         startUpload(uploadFiles)
     });

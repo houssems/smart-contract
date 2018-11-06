@@ -17,7 +17,8 @@ var db = mongoose.connection;
 
 //Les Routeurs
 var routes = require('./routes/index');
-var users = require('./routes/users')
+var users = require('./routes/users');
+var contract = require('./routes/contract');
 
 //Init
 var app = express();
@@ -75,6 +76,7 @@ app.use(function (req, res, next) {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/contract', contract);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));
