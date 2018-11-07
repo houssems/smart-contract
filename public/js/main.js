@@ -29,7 +29,7 @@
     uploadForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        if (uploadForm.valid()) {
+        if ($('#js-upload-form').valid()) {
             this.submit();
         }
     });

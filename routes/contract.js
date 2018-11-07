@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const upload = multer({dest: 'uploads/'});
-const userModel = require('../models/user/user');
+const contractorModel = require('../models/user/contractor');
 
 router.post('/add', upload.single('file'), function (req, res) {
 
@@ -12,7 +12,7 @@ router.post('/add', upload.single('file'), function (req, res) {
 
     var user = req.user;
     console.log(title, description, file, user);
-    userModel.update({_id: req.user._id}, {
+    contractorModel.update({_id: req.user._id}, {
         contract: {
             name: title,
             description: description,
