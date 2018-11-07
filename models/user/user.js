@@ -19,8 +19,8 @@ var UserSchema = Schema({
 	}
 }, { collection : 'users', discriminatorKey : '_type' });
 
-module.exports = mongoose.model('User', UserSchema);
-// module.exports.UserSchema = UserSchema;
+var User = mongoose.model('User', UserSchema);
+module.exports = User;
 
 
 module.exports.createUser = function(newUser, callback){
