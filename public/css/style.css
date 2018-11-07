@@ -95,7 +95,9 @@ footer {
     border-style: dashed;
     border-color: #ccc;
     line-height: 200px;
-    text-align: center
+    text-align: center;
+    font-size: 24px;
+    margin-top: 15px;
 }
 
 .upload-drop-zone.drop {
@@ -118,3 +120,17 @@ footer {
 .form-group .error {
     color: #d43f3a;
 }
+
+#js-upload-files {
+    display: none;
+}
+
+#selectFile {
+    float: right;
+}
+
+/*.section__upload .upload__method {*/
+    /*border: 1px solid #ccc;*/
+    /*padding: 7px;*/
+    /*margin: -5px;*/
+/*}*/
