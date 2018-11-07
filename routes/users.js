@@ -3,7 +3,9 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var User = require('../models/user');
+var User = require('../models/user/user');
+var Contractor = require('../models/user/contractor');
+var Signer = require('../models/user/signer');
 
 // Register
 router.get('/register', function (req, res) {
@@ -18,12 +20,14 @@ router.get('/login', function (req, res) {
 
 // Register
 router.post('/register', function (req, res) {
+    var role = req.body.role;
     var name = req.body.name;
 	var email = req.body.email;
 	var username = req.body.username;
 	var password = req.body.password;
     var password2 = req.body.password2;
-    
+
+
 	req.checkBody('name', 'Name is required').notEmpty();
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('email', 'Email is not valid').isEmail();
@@ -51,12 +55,15 @@ router.post('/register', function (req, res) {
 					});
 				}
 				else {
-					var newUser = new User({
-						name: name,
-						email: email,
-						username: username,
-						password: password
-					});
+
+				    const userObject = {
+                        name: name,
+                        email: email,
+                        username: username,
+                        password: password
+                    };
+
+					const newUser = (role === 'Contractor') ? new Contractor(userObject): new Signer(userObject);
 					User.createUser(newUser, function (err, user) {
 						if (err) throw err;
 						console.log(user);
