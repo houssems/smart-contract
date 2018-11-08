@@ -29,7 +29,10 @@
     uploadForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        if ($('#js-upload-form').valid()) {
+        var uploadContainer = $('.upload-form');
+
+        !selectedFiles ? uploadContainer.addClass('invalid'): uploadContainer.removeClass('invalid');
+        if ($('#js-upload-form').valid() && selectedFiles) {
             this.submit();
         }
     });
@@ -50,7 +53,16 @@
         this.className = 'upload-drop-zone';
         return false;
     };
-    $('#signataires-list').multiselect();
+
+    $.get('/users/all').done(function (users) {
+
+        var html = '';
+        users.map(function (user) {
+            html += '<option value="' + user._id + '">' + user.name + '</option>'
+        });
+
+        $('#signataires-list').html(html).multiselect();
+    })
 })(jQuery);
  
 

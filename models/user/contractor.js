@@ -1,15 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-const user = require('./user');
+const User = require('./user');
+const Signer = require('./signer');
 const roles = require('./roles');
 
 const contractorSchema = new Schema({
     contract: {
         name: {type: String},
+        signers: [{ type: Schema.Types.ObjectId, ref: 'Signer' }],
         description: {type: String},
-        file: {type: Buffer}
+        file: {type: Buffer},
+        submitted: {type: Boolean, default: false}
     }
 });
 
-module.exports = user.discriminator(roles.contractor, contractorSchema);
+module.exports = User.discriminator(roles.contractor, contractorSchema);

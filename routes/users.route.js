@@ -1,11 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-
-var User = require('../models/user/user');
-var Contractor = require('../models/user/contractor');
-var Signer = require('../models/user/signer');
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require('../models/user/user');
+const Contractor = require('../models/user/contractor');
+const Signer = require('../models/user/signer');
 const roles = require('../models/user/roles');
 
 // Register

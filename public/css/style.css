@@ -121,6 +121,15 @@ footer {
     color: #d43f3a;
 }
 
+.upload-form.invalid {
+    /*border: 1px solid #d43f3a;*/
+    border-left: 4px solid #d43f3a;
+}
+
+.multiselect.dropdown-toggle {
+    padding: 6px 50px;
+}
+
 #js-upload-files {
     display: none;
 }
@@ -129,6 +138,35 @@ footer {
     float: right;
 }
 
+.select-signatory {
+    text-align: right;
+}
+
+.dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+.dropdown-menu li > a {
+    padding: 7px 7px 7px 0;
+}
+
+.dropdown-menu li:not(:last-child) > a {
+    margin-bottom: 2px;
+}
+
+.signer-tab .control-label {
+    margin-bottom: 0;
+    padding: 7px 9px;
+}
+
+.retry-tab .retry-label {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.retry-tab .retry-button {
+    text-align: right;
+}
 /*.section__upload .upload__method {*/
     /*border: 1px solid #ccc;*/
     /*padding: 7px;*/

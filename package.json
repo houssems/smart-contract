@@ -22,7 +22,8 @@
     "multer": "^1.4.1",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "request": "^2.88.0"
   },
   "devDependencies": {},
   "description": ""

@@ -16,9 +16,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/loginapp');
 var db = mongoose.connection;
 
 //Les Routeurs
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var contract = require('./routes/contract');
+var routes = require('./routes/index.route');
+var users = require('./routes/users.route');
+var contract = require('./routes/contract.route');
 
 //Init
 var app = express();
