@@ -1,0 +1,51 @@
+<h2 class="page-header">Dashboard</h2>
+<p>Welcome to Smart Contract</p>
+
+{{#if errors}}
+    {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+    {{/each}}
+{{/if}}
+
+    <form action="/signer/" method="post" enctype="multipart/form-data" id="js-upload-form">
+        <div class="panel panel-default upload-form">
+            <div class="panel-heading"><strong>Upload Contract File</strong>
+                <small>(DOC, PDF)</small>
+            </div>
+
+            <div class="panel-body section__upload">
+
+                <div class="row upload__method">
+                    <div class="col col-md-6"><h4>Select file from your computer</h4></div>
+                    <div class="col col-md-6">
+                        <input type="file" name="file" id="js-upload-files" accept=".doc,.docx,.pdf">
+                        <div class="btn btn-primary" id="selectFile">Select file</div>
+                    </div>
+                </div>
+
+                <!--<div class="row"><h3>Or</h3></div>-->
+
+                <div class="row upload__method">
+                    <!--<div class="col col-md-12"><h4>Drag and drop files below</h4></div>-->
+                    <div class="col col-md-12">
+                        <div class="upload-drop-zone" id="drop-zone">
+                            Or just drag and drop files here
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="selectedFile">
+                    <span>Selected file: </span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-signataires-list">Submit</button>
+            </div>
+        </div>
+
+    </form>
+
