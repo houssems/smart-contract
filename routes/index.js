@@ -1,8 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
+var Contractor = require('../models/user/contractor');
+
+
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
+
+	console.log(req.user);
+	console.log(req.user instanceof Contractor);
+
 	res.render('index');
 });
 

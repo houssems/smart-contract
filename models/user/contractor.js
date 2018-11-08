@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var user = require('./user');
+const user = require('./user');
+const roles = require('./roles');
 
 const contractorSchema = new Schema({
     contract: {
@@ -11,4 +12,4 @@ const contractorSchema = new Schema({
     }
 });
 
-module.exports = user.discriminator('Contractor', contractorSchema);
+module.exports = user.discriminator(roles.contractor, contractorSchema);

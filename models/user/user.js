@@ -47,3 +47,8 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     	callback(null, isMatch);
 	});
 };
+
+module.exports.getUsersByRole = function (role, callback) {
+    const query = { _type: role };
+    User.find(query).select({ "name": 1, "_id": 1}).exec(callback);
+};
