@@ -6,7 +6,8 @@ const roles = require('./roles');
 
 const signerSchema = new Schema({
     contract: {
-        file: {type: Buffer}
+        file: {type: Buffer},
+        submitted: {type: Boolean, default: false}
     }
 });
 

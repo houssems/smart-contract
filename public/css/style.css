@@ -167,6 +167,11 @@ footer {
 .retry-tab .retry-button {
     text-align: right;
 }
+
+.select-contract {
+    height: 50px;
+    font-size: 22px;
+}
 /*.section__upload .upload__method {*/
     /*border: 1px solid #ccc;*/
     /*padding: 7px;*/

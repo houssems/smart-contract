@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const multer = require('multer');
-const upload = multer({dest: 'uploads/'});
+const upload = multer({});
 const Contractor = require('../models/user/contractor');
 const Signer = require('../models/user/signer');
 const routeUtils = require('./route.utils');
@@ -25,7 +25,7 @@ router.post('/', upload.single('file'), routeUtils.isAuthenticated, function (re
     const file = req.file;
     const userId = req.user._id;
 
-    console.log(title, description);
+    console.log(title, description, signers);
 
     req.checkBody('title', 'Title is required').notEmpty();
     req.checkBody('description', 'Description is required').notEmpty();
@@ -44,12 +44,11 @@ router.post('/', upload.single('file'), routeUtils.isAuthenticated, function (re
         }
     }, function (err, signerList) {
         console.log(signerList);
-        const fileBase64Format = file.toString('base64');
         const contract = {
             name: title,
             signers: signerList,
             description: description,
-            file: fileBase64Format,
+            file: file.buffer,
             submitted: false
         };
         Contractor.updateOne({_id: userId}, {

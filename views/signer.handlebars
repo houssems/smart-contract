@@ -7,6 +7,40 @@
     {{/each}}
 {{/if}}
 
+
+{{#if contract.docTitle}}
+    <div class="panel panel-default signer-tab">
+        <div class="panel-heading"><strong>Contract details</strong></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col col-md-6">Document name</div>
+                <div class="col col-md-6">{{contract.docTitle}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col col-md-6">Document description</div>
+                <div class="col col-md-6">{{contract.docDesc}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col col-md-6">Issuer name</div>
+                <div class="col col-md-6">{{contract.issuer.name}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default signer-tab">
+        <div class="panel-heading"><strong>Signer List</strong></div>
+        <div class="panel-body">
+            {{#each contract.signerList}}
+                <div class="row">
+                    <div class="col col-md-6">{{name}}</div>
+                    <div class="col col-md-6">{{docStatus}}</div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+{{else}}
     <form action="/signer/" method="post" enctype="multipart/form-data" id="js-upload-form">
         <div class="panel panel-default upload-form">
             <div class="panel-heading"><strong>Upload Contract File</strong>
@@ -23,10 +57,7 @@
                     </div>
                 </div>
 
-                <!--<div class="row"><h3>Or</h3></div>-->
-
                 <div class="row upload__method">
-                    <!--<div class="col col-md-12"><h4>Drag and drop files below</h4></div>-->
                     <div class="col col-md-12">
                         <div class="upload-drop-zone" id="drop-zone">
                             Or just drag and drop files here
@@ -49,3 +80,4 @@
 
     </form>
 
+{{/if}}

@@ -54,6 +54,10 @@
         return false;
     };
 
+    $('.select-contract').change(function (e) {
+        console.log(e.target.value);
+    });
+
     $.get('/users/all').done(function (users) {
 
         var html = '';
