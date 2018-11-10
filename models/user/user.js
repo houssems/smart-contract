@@ -16,6 +16,9 @@ var UserSchema = Schema({
 	},
 	name: {
 		type: String
+	},
+    mobile: {
+		type: String
 	}
 }, { collection : 'users', discriminatorKey : '_type' });
 
