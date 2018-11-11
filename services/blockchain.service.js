@@ -46,14 +46,19 @@ module.exports.sendContractData = function (contract, issuerId, callback) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        timeout: 30000
     };
 
     console.log(postData);
     request(contractRequestBuilder, function (error, response) {
         let responseData = response;
         if (response && response.body) {
-            responseData = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
+            try {
+                responseData = JSON.parse(response.body);
+            } catch(e) {
+                responseData = response.body;
+            }
         }
         callback(error, responseData);
     });
@@ -95,14 +100,19 @@ module.exports.sendContractFileOfSigner = function (contractFile, callback) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        timeout: 30000
     };
 
     console.log(postData);
     request(contractRequestBuilder, function (error, response) {
         let responseData = response;
         if (response && response.body) {
-            responseData = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
+            try {
+                responseData = JSON.parse(response.body);
+            } catch(e) {
+                responseData = response.body;
+            }
         }
         callback(error, responseData);
 
