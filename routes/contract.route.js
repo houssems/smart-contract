@@ -72,11 +72,11 @@ function sendContractToThirdParties(req, res, contract, userId) {
             req.flash('error_msg', err.toString());
             res.redirect('/contract/');
         } else {
-            console.log(response);
+            console.log('blockchain response =>', response);
             if (response && response.status) {
-                if (response.status === '200') {
+                if (parseInt(response.status) === 200) {
                     req.flash('success_msg', response.msg);
-                    Contractor.updateOne({_id: userId}, {contract: {submitted: true}}, function () {
+                    Contractor.updateOne({_id: userId}, {'contract.submitted': true}, function () {
                         res.redirect('/contract/');
                     });
                 }

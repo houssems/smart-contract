@@ -53,7 +53,7 @@ module.exports.sendContractData = function (contract, issuerId, callback) {
     request(contractRequestBuilder, function (error, response) {
         let responseData = response;
         if (response && response.body) {
-            responseData = response.body === 'string' ? JSON.parse(response.body) : response.body;
+            responseData = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
         }
         callback(error, responseData);
     });
@@ -102,7 +102,7 @@ module.exports.sendContractFileOfSigner = function (contractFile, callback) {
     request(contractRequestBuilder, function (error, response) {
         let responseData = response;
         if (response && response.body) {
-            responseData = response.body === 'string' ? JSON.parse(response.body) : response.body;
+            responseData = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
         }
         callback(error, responseData);
 

@@ -7,17 +7,17 @@
     {{/each}}
 {{/if}}
 
-{{#if user.contract.name}}
-    {{#if user.contract.submitted}}
-        <div class="alert alert-info">You have already submitted the contract document</div>
-    {{else}}
-        <div class="row retry-tab">
-            <div class="col col-md-8 col-xs-9 retry-label"><span>An error has occurred during sending to blockchain.</span></div>
-            <div class="col col-md-4 col-xs-3 retry-button">
-                <a class="btn btn-primary" href="/contract/?retry=true">Retry</a>
-            </div>
-        </div>
-    {{/if}}
+{{#if user.contract.submitted}}
+    <!--{{#if user.contract.submitted}}-->
+    <div class="alert alert-info">You have already submitted the contract document</div>
+    <!--{{else}}-->
+        <!--<div class="row retry-tab">-->
+            <!--<div class="col col-md-8 col-xs-9 retry-label"><span>An error has occurred during sending to blockchain.</span></div>-->
+            <!--<div class="col col-md-4 col-xs-3 retry-button">-->
+                <!--<a class="btn btn-primary" href="/contract/?retry=true">Retry</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--{{/if}}-->
 {{else}}
     <form action="/contract/" method="post" enctype="multipart/form-data" id="js-upload-form">
 
