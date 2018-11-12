@@ -172,6 +172,24 @@ footer {
     height: 50px;
     font-size: 22px;
 }
+
+.verify-tab {
+    text-align: center;
+}
+
+.pin-errors, .verify-errors {
+    display: none;
+}
+
+#confirmPinCode .panel-body .col {
+    word-break: break-word;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#confirmPinCode .panel-body .row {
+    border-bottom: 1px solid #ccc;
+}
 /*.section__upload .upload__method {*/
     /*border: 1px solid #ccc;*/
     /*padding: 7px;*/

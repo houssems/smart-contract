@@ -9,6 +9,8 @@
 
 
 {{#if contract.docTitle}}
+
+    <div class="alert alert-danger verify-errors"></div>
     <div class="panel panel-default signer-tab">
         <div class="panel-heading"><strong>Contract details</strong></div>
         <div class="panel-body">
@@ -38,6 +40,12 @@
                     <div class="col col-md-6">{{docStatus}}</div>
                 </div>
             {{/each}}
+        </div>
+    </div>
+
+    <div class="row verify-tab">
+        <div class="col">
+            <div id="verifyFingerPrint" class="btn btn-success btn-lg" data-id="{{contract.docFingerPrint}}">Verify</div>
         </div>
     </div>
 {{else}}
@@ -81,3 +89,25 @@
     </form>
 
 {{/if}}
+
+<div class="modal fade" id="confirmPinCode" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>To confirm your identity, please enter PIN code received by SMS</h3>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger pin-errors"></div>
+                <form role="form" action="/signer/confirm-pin" id="pinCodeForm">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="otp" placeholder="Enter PIN code" required>
+                    </div>
+                    <button class="btn btn-default" type="submit">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

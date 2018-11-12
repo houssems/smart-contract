@@ -1,9 +1,13 @@
 const request = require('request');
 
 // todo set url for blockchain
-const contractorPostFileUrl = 'http://127.0.0.1/blockchain/contractor';
+const contractorPostFileUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/addDigitalContractJson';
 
-const signerPostFileUrl = 'http://127.0.0.1/blockchain/signer';
+const signerPostFileUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/VarifyDigitalContractJson';
+
+const changeSignerStatusUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/SetSignerStatus';
+
+const smsOTPUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/SetSignerStatus';
 
 
 /**
@@ -56,7 +60,7 @@ module.exports.sendContractData = function (contract, issuerId, callback) {
         if (response && response.body) {
             try {
                 responseData = JSON.parse(response.body);
-            } catch(e) {
+            } catch (e) {
                 responseData = response.body;
             }
         }
@@ -104,31 +108,83 @@ module.exports.sendContractFileOfSigner = function (contractFile, callback) {
         timeout: 30000
     };
 
-    console.log(postData);
+    console.log('sendContractFileOfSigner => ', contractRequestBuilder);
+
     request(contractRequestBuilder, function (error, response) {
         let responseData = response;
         if (response && response.body) {
             try {
                 responseData = JSON.parse(response.body);
-            } catch(e) {
+            } catch (e) {
                 responseData = response.body;
             }
         }
         callback(error, responseData);
 
-        // const responseData = {
-        //     "docTitle": "ttttt",
-        //     "docDesc": "tttttt",
-        //     "docIssuer": "5be5d4f36e6f21133c4fb995",
-        //     "signerList": [ {
-        //         "docStatus": "NOT_SIGNED",
-        //         "signerId": "5be360dcf95a7e1068c54395"
-        //     }, {
-        //         "docStatus": "SIGNED",
-        //         "signerId": "5be4b776abb92f2094cae9c7"
-        //     }],
-        // };
-
-        // callback(null, responseData);
     });
+};
+
+
+module.exports.changeSignerStatus = function (docFingerPrint, signerId, callback) {
+
+    const postData = {
+        docFingerPrint: docFingerPrint,
+        signerId: signerId
+    };
+    const changeSignerStatusBuilder = {
+        uri: changeSignerStatusUrl,
+        body: JSON.stringify(postData),
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        timeout: 30000
+    };
+
+    console.log('changeSignerStatus => ', changeSignerStatusBuilder);
+
+    request(changeSignerStatusBuilder, function (error, response) {
+        let responseData = response;
+        if (response && response.body) {
+            try {
+                responseData = JSON.parse(response.body);
+            } catch (e) {
+                responseData = response.body;
+            }
+        }
+        callback(error, responseData);
+    });
+
+};
+
+module.exports.verifyPin = function (otp, signerId, callback) {
+
+    const postData = {
+        otp: otp,
+        id: signerId
+    };
+    const verifyPinBuilder = {
+        uri: smsOTPUrl,
+        body: JSON.stringify(postData),
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        timeout: 30000
+    };
+
+    console.log('verifyPin =>', verifyPinBuilder);
+
+    request(verifyPinBuilder, function (error, response) {
+        let responseData = response;
+        if (response && response.body) {
+            try {
+                responseData = JSON.parse(response.body);
+            } catch (e) {
+                responseData = response.body;
+            }
+        }
+        callback(error, responseData);
+    });
+
 };
