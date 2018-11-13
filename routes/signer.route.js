@@ -24,7 +24,7 @@ router.post('/', upload.single('file'), routeUtils.isAuthenticated, function (re
 
 router.post('/verify', routeUtils.isAuthenticated, function (req, res) {
     const userId = req.user._id;
-    const docFingerPrint = req.user.docFingerPrint;
+    const docFingerPrint = req.body.docFingerPrint;
 
     console.log('change signer status => ', docFingerPrint, userId);
 
@@ -39,7 +39,7 @@ router.post('/verify', routeUtils.isAuthenticated, function (req, res) {
 
 router.post('/confirm-pin', routeUtils.isAuthenticated, function (req, res) {
     const userId = req.user._id;
-    const otp = req.user.otp;
+    const otp = req.body.otp;
 
     console.log('confirm PIN => ', otp, userId);
 
