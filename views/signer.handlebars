@@ -45,7 +45,9 @@
 
     <div class="row verify-tab">
         <div class="col">
-            <div id="verifyFingerPrint" class="btn btn-success btn-lg" data-id="{{contract.docFingerPrint}}">Verify</div>
+            <div id="verifyFingerPrint"
+                 class="btn btn-success btn-lg {{#if contract.hasAlreadySigned}}disabled{{/if}}"
+                 data-id="{{contract.docFingerPrint}}">Verify</div>
         </div>
     </div>
 {{else}}

@@ -78,6 +78,7 @@ router.post('/confirm-pin', routeUtils.isAuthenticated, function (req, res) {
 function sendContractFileOfSigner(req, res, contractFile) {
 
     const userId = req.user._id;
+    console.log('userId => ', userId);
     blockchain.sendContractFileOfSigner(contractFile, async function (err, response) {
         if (err) {
             req.flash('error_msg', err.toString());
@@ -89,7 +90,8 @@ function sendContractFileOfSigner(req, res, contractFile) {
                 const result = {
                     docTitle: response.docTitle,
                     docDesc: response.docDesc,
-                    docFingerPrint: response.docFingerPrint
+                    docFingerPrint: response.docFingerPrint,
+                    hasAlreadySigned: false
                 };
 
                 result.issuer = await Contractor.findOne({_id: response.docIssuer}).select({"name": 1}).exec();
@@ -113,9 +115,10 @@ function sendContractFileOfSigner(req, res, contractFile) {
                         _id: signer._id
                     };
 
-                    result.hasAlreadySigned = signer._id === userId && item.docStatus === 'SIGNED';
-
-                    console.log('item:', res);
+                    if (signer._id.toString() === userId.toString() && item.docStatus === 'SIGNED') {
+                        console.log('already signed...');
+                        result.hasAlreadySigned = true;
+                    }
 
                     return res;
                 });
