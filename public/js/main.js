@@ -77,19 +77,25 @@
         var docFingerPrint = $(this).data('id');
 
         $('.verify-errors').hide();
-        $.post('/signer/verify', {docFingerPrint: docFingerPrint}).done(function (data) {
-            console.log(data);
+        displayLoadingBar();
+        $.post('/signer/verify', {docFingerPrint: docFingerPrint})
+            .done(function (data) {
+                console.log(data);
 
-            if (data && data.status) {
-                var status = parseInt(data.status);
+                if (data && data.status) {
+                    var status = parseInt(data.status);
 
-                if (status === 200) {
-                    $('#confirmPinCode').modal("show");
-                } else {
-                    $('.verify-errors').show().text(data.msg);
+                    if (status === 200) {
+                        $('#confirmPinCode').modal("show");
+                    } else {
+                        $('.verify-errors').show().text(data.msg);
+                    }
                 }
-            }
-        });
+            })
+            .always(function () {
+                hideLoadingBar();
+            });
+        ;
     });
 
 
@@ -100,50 +106,63 @@
         var action = form.attr("action");
         var formData = form.serializeArray();
         var data = {};
-        $(formData).each(function(index, obj){
+        $(formData).each(function (index, obj) {
             data[obj.name] = obj.value;
         });
         console.log(data);
         $('.pin-errors').hide();
+        displayLoadingBar();
 
-        $.post(action, data).done(function (data) {
-            console.log(data);
+        $.post(action, data)
+            .done(function (data) {
+                console.log(data);
 
-            if (data && data.docFingerPrint) {
+                if (data && data.docFingerPrint) {
 
-                var html = "<div class=\"panel panel-default\">" +
-                "        <div class=\"panel-heading\"><strong>Transaction details</strong></div>" +
-                "        <div class=\"panel-body\">" +
-
-
-                "            <div class=\"row\">" +
-                "                <div class=\"col col-xs-4\">Document finger print</div>" +
-                "                <div class=\"col col-xs-8\">" + data.docFingerPrint + "</div>" +
-                "            </div>" +
-
-                "            <div class=\"row\">" +
-                "                <div class=\"col col-xs-4\">Signer Id</div>" +
-                "                <div class=\"col col-xs-8\">" + data.signerId + "</div>" +
-                "            </div>" +
-
-                "            <div class=\"row\">" +
-                "                <div class=\"col col-xs-4\">Transaction Id</div>" +
-                "                <div class=\"col col-xs-8\">" + data.transactionId + "</div>" +
-                "            </div>" +
+                    var html = "<div class=\"panel panel-default\">" +
+                        "        <div class=\"panel-heading\"><strong>Transaction details</strong></div>" +
+                        "        <div class=\"panel-body\">" +
 
 
-                "        </div>" +
-                "    </div>";
+                        "            <div class=\"row\">" +
+                        "                <div class=\"col col-xs-4\">Document finger print</div>" +
+                        "                <div class=\"col col-xs-8\">" + data.docFingerPrint + "</div>" +
+                        "            </div>" +
 
-                $('#confirmPinCode').find('.modal-body').html(html);
-                $('#confirmPinCode').find('.modal-header h3').text('Thank you for confirming your Identity');
-            }else if (data && data.msg) {
-                $('.pin-errors').show().text(data.msg);
-            }
+                        "            <div class=\"row\">" +
+                        "                <div class=\"col col-xs-4\">Signer Id</div>" +
+                        "                <div class=\"col col-xs-8\">" + data.signerId + "</div>" +
+                        "            </div>" +
+
+                        "            <div class=\"row\">" +
+                        "                <div class=\"col col-xs-4\">Transaction Id</div>" +
+                        "                <div class=\"col col-xs-8\">" + data.transactionId + "</div>" +
+                        "            </div>" +
 
 
-        })
-    })
+                        "        </div>" +
+                        "    </div>";
+
+                    $('#confirmPinCode').find('.modal-body').html(html);
+                    $('#confirmPinCode').find('.modal-header h3').text('Thank you for confirming your Identity');
+                } else if (data && data.msg) {
+                    $('.pin-errors').show().text(data.msg);
+                }
+
+
+            })
+            .always(function () {
+                hideLoadingBar();
+            });
+    });
+
+    function displayLoadingBar() {
+        $('.loading-bar').show();
+    }
+
+    function hideLoadingBar() {
+        $('.loading-bar').hide();
+    }
 })(jQuery);
  
 
