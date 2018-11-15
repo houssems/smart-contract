@@ -1,53 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const routeUtils = require('./route.utils');
 const multer = require('multer');
 const upload = multer({});
 const blockchain = require('../services/blockchain.service');
 
-router.get('/', routeUtils.isAuthenticated, function (req, res) {
+router.get('/', function (req, res) {
 
-    res.render('signer');
+    res.render('viewer');
 });
 
-router.post('/', upload.single('file'), routeUtils.isAuthenticated, function (req, res) {
+router.post('/', upload.single('file'), function (req, res) {
     const file = req.file;
-    const userId = req.user.ID;
     const fileBase64Format = file.buffer.toString('base64');
 
-    sendContractFileOfSigner(req, res, fileBase64Format, userId);
+    sendContractFileOfViewer(req, res, fileBase64Format);
 });
-
-router.post('/verify', routeUtils.isAuthenticated, function (req, res) {
-    const userId = req.user._id;
-    const docFingerPrint = req.body.docFingerPrint;
-
-    console.log('change signer status => ', docFingerPrint, userId);
-
-    blockchain.changeSignerStatus(docFingerPrint, userId, function (err, response) {
-        if (err) {
-            res.json({errors: err.toString()});
-        }else {
-            res.json(response);
-        }
-    })
-});
-
-router.post('/confirm-pin', routeUtils.isAuthenticated, function (req, res) {
-    const userId = req.user.ID;
-    const otp = req.body.otp;
-
-    console.log('confirm PIN => ', otp, userId);
-
-    blockchain.verifyPin(otp, userId, function (err, response) {
-        if (err) {
-            res.json({errors: err.toString()});
-        }else {
-            res.json(response);
-        }
-    })
-});
-
 
 
 /**
@@ -71,14 +38,11 @@ router.post('/confirm-pin', routeUtils.isAuthenticated, function (req, res) {
  *   ]
  *  }
  */
-function sendContractFileOfSigner(req, res, contractFile) {
-
-    const userId = req.user.ID;
-    console.log('userId => ', userId);
+function sendContractFileOfViewer(req, res, contractFile) {
     blockchain.sendContractFileOfSigner(contractFile, async function (err, response) {
         if (err) {
             req.flash('error_msg', err.toString());
-            res.redirect('/signer/');
+            res.redirect('/viewer/');
         } else {
             console.log('blockchain response =>', response);
             if (response && response.docTitle) {
@@ -86,19 +50,13 @@ function sendContractFileOfSigner(req, res, contractFile) {
                 const result = {
                     docTitle: response.docTitle,
                     docDesc: response.docDesc,
-                    docFingerPrint: response.docFingerPrint,
-                    hasAlreadySigned: false
+                    docFingerPrint: response.docFingerPrint
                 };
 
                 result.issuer = await blockchain.findUserBy(response.docIssuer, 'ID');
 
                 result.signerList = response.signerList.map(async function (signer) {
                     const user = await blockchain.findUserBy(signer.signerId, 'ID');
-
-                    if (signer.signerId === userId && signer.docStatus === 'SIGNED') {
-                        console.log('already signed...');
-                        result.hasAlreadySigned = true;
-                    }
 
                     return {
                         docStatus: signer.docStatus,
@@ -109,7 +67,7 @@ function sendContractFileOfSigner(req, res, contractFile) {
                 console.log(result.signerList);
 
 
-                res.render('signer', {contract: result});
+                res.render('viewer', {contract: result});
 
             } else {
                 if (response && response.status) {
@@ -117,7 +75,7 @@ function sendContractFileOfSigner(req, res, contractFile) {
                 }else {
                     req.flash('error_msg', 'An error has occurred while getting contract details.');
                 }
-                res.redirect('/signer/');
+                res.redirect('/viewer/');
             }
         }
     });

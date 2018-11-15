@@ -164,6 +164,7 @@ footer {
     padding-top: 8px;
     padding-bottom: 8px;
 }
+
 .retry-tab .retry-button {
     text-align: right;
 }
@@ -192,7 +193,7 @@ footer {
 }
 
 .loading-bar {
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     position: fixed;
     top: 0;
     left: 0;
@@ -200,6 +201,7 @@ footer {
     width: 100%;
     display: none;
 }
+
 .lds-ring {
     display: inline-block;
     width: 64px;
@@ -222,15 +224,19 @@ footer {
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: #fff transparent transparent transparent;
 }
+
 .lds-ring div:nth-child(1) {
     animation-delay: -0.45s;
 }
+
 .lds-ring div:nth-child(2) {
     animation-delay: -0.3s;
 }
+
 .lds-ring div:nth-child(3) {
     animation-delay: -0.15s;
 }
+
 @keyframes lds-ring {
     0% {
         transform: rotate(0deg);
@@ -239,8 +245,17 @@ footer {
         transform: rotate(360deg);
     }
 }
+
+.viewer-tab {
+    margin-top: 15px;
+}
+
+.alert {
+    word-break: break-all;
+}
+
 /*.section__upload .upload__method {*/
-    /*border: 1px solid #ccc;*/
-    /*padding: 7px;*/
-    /*margin: -5px;*/
+/*border: 1px solid #ccc;*/
+/*padding: 7px;*/
+/*margin: -5px;*/
 /*}*/

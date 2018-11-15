@@ -20,6 +20,7 @@ var routes = require('./routes/index.route');
 var users = require('./routes/users.route');
 var contract = require('./routes/contract.route');
 var signer = require('./routes/signer.route');
+var viewer = require('./routes/viewer.route');
 
 //Init
 var app = express();
@@ -79,6 +80,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/contract', contract);
 app.use('/signer', signer);
+app.use('/viewer', viewer);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

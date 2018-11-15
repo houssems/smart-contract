@@ -26,7 +26,7 @@
 
             <div class="row">
                 <div class="col col-md-6">Issuer name</div>
-                <div class="col col-md-6">{{contract.issuer.name}}</div>
+                <div class="col col-md-6">{{contract.issuer.firstname}} {{contract.issuer.lastname}}</div>
             </div>
         </div>
     </div>
@@ -42,16 +42,8 @@
             {{/each}}
         </div>
     </div>
-
-    <div class="row verify-tab">
-        <div class="col">
-            <div id="verifyFingerPrint"
-                 class="btn btn-success btn-lg {{#if contract.hasAlreadySigned}}disabled{{/if}}"
-                 data-id="{{contract.docFingerPrint}}">Sign</div>
-        </div>
-    </div>
 {{else}}
-    <form action="/signer/" method="post" enctype="multipart/form-data" id="js-upload-form">
+    <form action="/viewer/" method="post" enctype="multipart/form-data" id="js-upload-form">
         <div class="panel panel-default upload-form">
             <div class="panel-heading"><strong>Upload Contract File</strong>
                 <small>(DOC, PDF)</small>
@@ -91,25 +83,3 @@
     </form>
 
 {{/if}}
-
-<div class="modal fade" id="confirmPinCode" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>To confirm your identity, please enter PIN code received by SMS</h3>
-            </div>
-            <div class="modal-body">
-
-                <div class="alert alert-danger pin-errors"></div>
-                <form role="form" action="/signer/confirm-pin" id="pinCodeForm">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="otp" placeholder="Enter PIN code" required>
-                    </div>
-                    <button class="btn btn-default" type="submit">Confirm</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>

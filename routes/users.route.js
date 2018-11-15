@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/user/user');
-const Contractor = require('../models/user/contractor');
-const Signer = require('../models/user/signer');
 const roles = require('../models/user/roles');
+const blockchain = require('../services/blockchain.service');
+const uuidv4 = require('uuid/v4');
 
 // Register
 router.get('/register', function (req, res) {
@@ -19,22 +18,19 @@ router.get('/login', function (req, res) {
 });
 
 // Register
-router.post('/register', function (req, res) {
+router.post('/register', async function (req, res) {
     var role = req.body.role;
-    var name = req.body.name;
     var email = req.body.email;
-    var username = req.body.username;
-    var password = req.body.password;
-    var password2 = req.body.password2;
+    var firstname = req.body.firstname;
+    var lastname = req.body.lastname;
+    var title = req.body.title;
     var mobile = req.body.mobile;
 
 
-    req.checkBody('name', 'Name is required').notEmpty();
+    req.checkBody('firstname', 'Firstname is required').notEmpty();
+    req.checkBody('lastname', 'Lastname is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('username', 'Username is required').notEmpty();
-    req.checkBody('password', 'Password is required').notEmpty();
-    req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
     req.checkBody('mobile', 'Mobile is required').notEmpty();
     req.checkBody('mobile', 'Mobile has to be only numbers and (+) sign').matches(/^[0-9-+]+$/);
 
@@ -46,72 +42,60 @@ router.post('/register', function (req, res) {
             errors: errors
         });
     } else {
-        User.findOne({
-            username: {
-                "$regex": "^" + username + "\\b", "$options": "i"
-            }
-        }, function (err, user) {
-            User.findOne({
-                email: {
-                    "$regex": "^" + email + "\\b", "$options": "i"
-                }
-            }, function (err, mail) {
-                if (user || mail) {
-                    res.render('register', {
-                        user: user,
-                        mail: mail
-                    });
-                }
-                else {
 
-                    const userObject = {
-                        name: name,
-                        email: email,
-                        username: username,
-                        password: password,
-                        mobile: mobile
-                    };
+        const user = await blockchain.findUserBy(email);
+        console.log(user);
 
-                    const newUser = (role === 'Contractor') ? new Contractor(userObject) : new Signer(userObject);
-                    User.createUser(newUser, function (err, user) {
-                        if (err) throw err;
-                        console.log(user);
-                    });
-                    req.flash('success_msg', 'You are registered and can now login');
-                    res.redirect('/users/login');
-                }
+        if (user) {
+            res.render('register', {
+                user: user,
+                mail: email
             });
-        });
+        } else {
+
+            const userObject = {
+                email, firstname, lastname, title, mobile,
+                ID: uuidv4()
+            };
+
+            const userRegistered = await blockchain.registerUser(userObject, role);
+            if (userRegistered.ID) {
+                console.log(userRegistered);
+                req.flash('success_msg', 'You are registered and can now login');
+                res.redirect('/users/login');
+            } else {
+                res.render('register', {errors: err});
+            }
+        }
+
     }
 });
 
 passport.use(new LocalStrategy(
-    function (username, password, done) {
-        User.getUserByUsername(username, function (err, user) {
-            if (err) throw err;
-            if (!user) {
-                return done(null, false, {message: 'Unknown User'});
-            }
+    async function (username, password, done) {
 
-            User.comparePassword(password, user.password, function (err, isMatch) {
-                if (err) throw err;
-                if (isMatch) {
-                    return done(null, user);
-                } else {
-                    return done(null, false, {message: 'Invalid password'});
-                }
-            });
-        });
+        const user = await blockchain.findUserBy(username);
+        if (!user)
+            return done(null, false, {message: 'Unknown User'});
+
+        // todo change with password from blockchain
+        if (password !== '123')
+            return done(null, false, {message: 'Invalid password'});
+
+        return done(null, user);
     }));
 
 passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    done(null, user.email);
 });
 
-passport.deserializeUser(function (id, done) {
-    User.getUserById(id, function (err, user) {
-        done(err, user);
-    });
+passport.deserializeUser(async function (email, done) {
+
+    const user = await blockchain.findUserBy(email);
+    if (user.ID)
+        done(null, user);
+    else
+        done(user, false);
 });
 router.post('/login',
     passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true}),
@@ -128,20 +112,30 @@ router.get('/logout', function (req, res) {
     res.redirect('/users/login');
 });
 
-router.get('/all', function (req, res) {
+router.get('/all', async function (req, res) {
 
     const role = req.query.role || roles.signer;
     if (roles.canSearch.indexOf(role) === -1) {
         res.json([]);
     } else {
-        User.getUsersByRole(role, function (err, users) {
-            if (err)
-                res.json([]);
-            else
-                res.json(users);
-        })
+        let users;
+        switch (role) {
+            case roles.signer:
+                users = await blockchain.getSignatoryList();
+                break;
+            case roles.contractor:
+                users = await blockchain.getIssuerList();
+                break;
+
+            default:
+                users = await blockchain.getSignatoryList();
+        }
+
+        if (typeof users === 'object') {
+            res.json(users);
+        } else {
+            res.json([]);
+        }
     }
-
-
 });
 module.exports = router;

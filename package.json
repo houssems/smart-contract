@@ -8,6 +8,7 @@
   "author": "Jaziri Mehdi",
   "license": "ISC",
   "dependencies": {
+    "await-to-js": "^2.0.1",
     "bcryptjs": "*",
     "body-parser": "*",
     "connect-flash": "*",
@@ -23,7 +24,8 @@
     "passport": "*",
     "passport-http": "*",
     "passport-local": "*",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {},
   "description": ""
