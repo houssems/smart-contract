@@ -55,7 +55,7 @@ function sendContractFileOfViewer(req, res, contractFile) {
 
                 result.issuer = await blockchain.findUserBy(response.docIssuer, 'ID');
 
-                result.signerList = response.signerList.map(async function (signer) {
+                result.signerList = response.signerList.map(function (signer) {
                     return {
                         docStatus: signer.docStatus,
                         name: signer.firstname + ' ' + signer.lastname
