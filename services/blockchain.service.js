@@ -9,7 +9,7 @@ const changeSignerStatusUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/
 
 const smsOTPUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/SetSignerStatus';
 
-const signatoryListUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/getListOfSignatories';
+const signatoryListUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/getListOfSigners';
 const issuerListUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/getListOfIssuers';
 const registerIssuerUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/registerIssuer';
 const registerSignerUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/registerSigner';
@@ -46,7 +46,7 @@ function sendContractData (contract, issuerId, callback) {
         docDesc: contract.description,
         docIssuer: issuerId.toString(),
         signerList: contract.signers.map(function (signer) {
-            return {signerId: signer._id.toString()};
+            return {signerId: signer};
         })
     };
     const contractRequestBuilder = {

@@ -67,7 +67,7 @@
 
         var html = '';
         users.map(function (user) {
-            html += '<option value="' + user._id + '">' + user.name + '</option>'
+            html += '<option value="' + user.ID + '">' + user.firstname + ' ' + user.lastname + '</option>'
         });
 
         $('#signataires-list').html(html).multiselect();

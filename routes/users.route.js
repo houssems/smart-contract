@@ -131,6 +131,8 @@ router.get('/all', async function (req, res) {
                 users = await blockchain.getSignatoryList();
         }
 
+        console.log(users);
+
         if (typeof users === 'object') {
             res.json(users);
         } else {

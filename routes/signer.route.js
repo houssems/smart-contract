@@ -19,7 +19,7 @@ router.post('/', upload.single('file'), routeUtils.isAuthenticated, function (re
 });
 
 router.post('/verify', routeUtils.isAuthenticated, function (req, res) {
-    const userId = req.user._id;
+    const userId = req.user.ID;
     const docFingerPrint = req.body.docFingerPrint;
 
     console.log('change signer status => ', docFingerPrint, userId);
@@ -92,8 +92,7 @@ function sendContractFileOfSigner(req, res, contractFile) {
 
                 result.issuer = await blockchain.findUserBy(response.docIssuer, 'ID');
 
-                result.signerList = response.signerList.map(async function (signer) {
-                    const user = await blockchain.findUserBy(signer.signerId, 'ID');
+                result.signerList = response.signerList.map(function (signer) {
 
                     if (signer.signerId === userId && signer.docStatus === 'SIGNED') {
                         console.log('already signed...');
@@ -102,7 +101,7 @@ function sendContractFileOfSigner(req, res, contractFile) {
 
                     return {
                         docStatus: signer.docStatus,
-                        name: user.firstname + ' ' + user.lastname
+                        name: signer.firstname + ' ' + signer.lastname
                     }
                 });
 
