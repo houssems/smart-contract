@@ -293,14 +293,21 @@ function getSignatoryList () {
  *
  * @param value
  * @param attribute
+ * @param concernedUserClass
  * @returns {Promise<void>}
  */
-async function findUserBy(value, attribute = 'email') {
+async function findUserBy(value, attribute = 'email', concernedUserClass = 'all') {
     const signers = await getSignatoryList();
     const issuers = await getIssuerList();
-    const usersList = [signers, issuers];
 
-    // console.log(issuers);
+    let usersList = [];
+    switch(concernedUserClass) {
+        case 'signer': usersList = [signers]; break;
+        case 'issuer': usersList = [issuers]; break;
+
+        default: usersList = [issuers, signers];
+    }
+
     let userFound;
 
     usersList.forEach(function (userGroup) {

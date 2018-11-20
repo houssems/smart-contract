@@ -86,16 +86,31 @@ passport.use(new LocalStrategy(
     }));
 
 passport.serializeUser(function (user, done) {
-    done(null, user.email);
+    done(null, user);
 });
 
-passport.deserializeUser(async function (email, done) {
+passport.deserializeUser(function (user, done) {
+    if (user) {
+        let userType = 'all';
+        if (user['$class'] == 'digital.contract.DocIssuer') {
+            userType = 'issuer';
+        } else if (user['$class'] == 'digital.contract.DocSigner') {
+            userType = 'signer';
+        }
 
-    const user = await blockchain.findUserBy(email);
-    if (user.ID)
-        done(null, user);
-    else
+        console.log(user.email, userType);
+        blockchain.findUserBy(user.email, 'email', userType)
+            .then(function (userData) {
+                console.log('trying to get new user...', userData);
+                if (userData && userData.ID)
+                    done(null, userData);
+                else
+                    done(user, false);
+            })
+
+    } else {
         done(user, false);
+    }
 });
 router.post('/login',
     passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true}),
@@ -130,8 +145,6 @@ router.get('/all', async function (req, res) {
             default:
                 users = await blockchain.getSignatoryList();
         }
-
-        console.log(users);
 
         if (typeof users === 'object') {
             res.json(users);

@@ -70,7 +70,9 @@
             html += '<option value="' + user.ID + '">' + user.firstname + ' ' + user.lastname + '</option>'
         });
 
-        $('#signataires-list').html(html).multiselect();
+        $('#signataires-list').html(html).multiselect({
+            title: "Select Signers"
+        });
     });
 
     $('#verifyFingerPrint').click(function () {

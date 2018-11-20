@@ -183,7 +183,7 @@ footer {
 }
 
 #confirmPinCode .panel-body .col {
-    word-break: break-word;
+    word-break: break-word !important;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -254,6 +254,32 @@ footer {
     word-break: break-all;
 }
 
+html, body {
+    font-family: "Lato", "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.contractor-tab {
+    vertical-align: middle;
+    display: inline-block;
+    float: right;
+}
+.contractor-tab span {
+    font-size: 22px;
+    color: #555;
+    vertical-align: text-top;
+}
+
+.contractor-tab .btn {
+    border-radius: 0;
+}
+
+.btn-actions {
+    text-align: right;
+}
+
+.selectWrap {
+    min-height: 34px;
+}
 /*.section__upload .upload__method {*/
 /*border: 1px solid #ccc;*/
 /*padding: 7px;*/
