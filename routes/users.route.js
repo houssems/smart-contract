@@ -92,10 +92,11 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (user, done) {
     if (user) {
         let userType = 'all';
-        if (user['$class'] == 'digital.contract.DocIssuer') {
-            userType = 'issuer';
-        } else if (user['$class'] == 'digital.contract.DocSigner') {
+
+        if (user['$class'] == 'digital.contract.DocSigner') {
             userType = 'signer';
+        } else if (user['$class'] == 'digital.contract.DocIssuer') {
+            userType = 'issuer';
         }
 
         console.log(user.email, userType);

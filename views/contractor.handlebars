@@ -10,14 +10,14 @@
 {{#if user.contract.submitted}}
     <!--{{#if user.contract.submitted}}-->
     <div class="alert alert-info">You have already submitted the contract document</div>
-    <!--{{else}}-->
-        <!--<div class="row retry-tab">-->
-            <!--<div class="col col-md-8 col-xs-9 retry-label"><span>An error has occurred during sending to blockchain.</span></div>-->
-            <!--<div class="col col-md-4 col-xs-3 retry-button">-->
-                <!--<a class="btn btn-primary" href="/contract/?retry=true">Retry</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--{{/if}}-->
+            <!--{{else}}-->
+    <!--<div class="row retry-tab">-->
+    <!--<div class="col col-md-8 col-xs-9 retry-label"><span>An error has occurred during sending to blockchain.</span></div>-->
+    <!--<div class="col col-md-4 col-xs-3 retry-button">-->
+    <!--<a class="btn btn-primary" href="/contract/?retry=true">Retry</a>-->
+    <!--</div>-->
+    <!--</div>-->
+            <!--{{/if}}-->
 {{else}}
     <form action="/contract/" method="post" enctype="multipart/form-data" id="js-upload-form">
 
@@ -67,22 +67,29 @@
             <div class="panel-heading"><strong>Select signatories</strong></div>
 
             <div class="panel-body">
-                <div class="form-group">
+                <div class="row form-group">
                     <label class="col-sm-3 control-label">Signatories</label>
                     <div class="col-sm-9 select-signatory">
-                        <select name="signers[]" class="form-control" id="signataires-list" multiple="multiple"></select>
+                        <select name="signers[]" class="form-control" id="signataires-list"
+                                multiple="multiple"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 btn-actions">
+                        <button type="submit" class="btn btn-primary btn-signataires-list">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
 
-
-        <div class="form-group">
-            <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-signataires-list">Submit</button>
-            </div>
-        </div>
-
     </form>
+
+    <div class="row contractor-tab">
+        <div class="col-sm-12">
+            <span>OR</span> &nbsp;&nbsp;&nbsp;<a href="/contract/become-signer" class="btn btn-danger">become a
+            Signatory</a>
+        </div>
+    </div>
 {{/if}}
 

@@ -4,7 +4,6 @@ const routeUtils = require('./route.utils');
 const multer = require('multer');
 const upload = multer({});
 const blockchain = require('../services/blockchain.service');
-const uuidv4 = require('uuid/v4');
 
 router.get('/', routeUtils.isAuthenticated, function (req, res) {
 
@@ -48,23 +47,6 @@ router.post('/confirm-pin', routeUtils.isAuthenticated, function (req, res) {
         }
     })
 });
-
-router.get('/become-contractor', routeUtils.isAuthenticated, async function (req, res) {
-
-    let userRegistered = await blockchain.findUserBy(req.user.email, 'email', 'issuer');
-    if (!userRegistered) {
-        let userAsSigner = {...req.user, ID: uuidv4()};
-        userRegistered = await blockchain.registerUser(userAsSigner, 'Contractor');
-    }
-
-    if (userRegistered.ID) {
-        req.session.passport.user.ID = userRegistered.ID;
-        req.session.passport.user['$class'] = 'digital.contract.DocIssuer';
-        res.redirect('/contract/');
-    }
-});
-
-
 
 /**
  *

@@ -305,7 +305,7 @@ async function findUserBy(value, attribute = 'email', concernedUserClass = 'all'
         case 'signer': usersList = [signers]; break;
         case 'issuer': usersList = [issuers]; break;
 
-        default: usersList = [issuers, signers];
+        default: usersList = [signers, issuers];
     }
 
     let userFound;
