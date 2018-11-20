@@ -59,8 +59,8 @@
                 </div>
 
                 <div class="row" id="selectedFile">
-                    <span>Selected file: </span>
-                    <span></span>
+                    <span class="file-label">Selected file: </span>
+                    <span class="file-name"></span>
                 </div>
             </div>
         </div>
@@ -94,4 +94,16 @@
         </div>
     </div>
 {{/if}}
+
+<div class="modal fade" id="previewDocument" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
 

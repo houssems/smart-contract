@@ -11,6 +11,8 @@
     var inputFileElement = $('#js-upload-files');
     var selectedFileContainer = $('#selectedFile');
     var errorHandler = $('.section__upload--error');
+    var previewDocument = $('#previewDocument');
+    var fileNameEl = selectedFileContainer.find('.file-name');
 
     var selectedFiles;
 
@@ -19,14 +21,34 @@
     });
 
     inputFileElement.change(function (e) {
-        setSelectedFile(e.target.files);
-        errorHandler.hide();
+        if (checkFileInput(e.target.files)) {
+            setSelectedFile(e.target.files);
+        } else {
+            setSelectedFile([]);
+        }
     });
 
     function setSelectedFile(files) {
         selectedFiles = files;
-        selectedFileContainer.children().eq(1).text(selectedFiles[0].name);
+        if (selectedFiles.length > 0)
+            fileNameEl.text(selectedFiles[0].name);
+        else
+            fileNameEl.text('');
     }
+
+    if (fileNameEl) {
+        fileNameEl.click(function () {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                previewDocument.find('iframe').attr('src', e.target.result);
+                previewDocument.modal("show");
+            };
+
+            reader.readAsDataURL(selectedFiles[0]);
+        });
+    }
+
 
     if (uploadForm) {
         uploadForm.addEventListener('submit', function (e) {
@@ -34,11 +56,43 @@
 
             var uploadContainer = $('.upload-form');
 
-            !selectedFiles ? uploadContainer.addClass('invalid') : uploadContainer.removeClass('invalid');
-            if ($('#js-upload-form').valid() && selectedFiles) {
+            (!selectedFiles || (selectedFiles && selectedFiles.length === 0)) ?
+                uploadContainer.addClass('invalid') :
+                uploadContainer.removeClass('invalid');
+            if ($('#js-upload-form').valid() && selectedFiles && selectedFiles.length && selectedFiles.length > 0) {
                 this.submit();
             }
         });
+    }
+
+    function checkFileInput(files) {
+        errorHandler.hide();
+        if (files.length > 1) {
+            errorHandler.text('You can\'t select more than one file').show();
+            return false;
+        } else {
+            var authorisedFileTypes = ['pdf', 'docx', 'doc'];
+            var found = false;
+
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+
+                var ext = file.name.split('.').pop();
+                if (authorisedFileTypes.indexOf(ext) === -1) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                errorHandler.text('Only document Word or PDF can be selected').show();
+                return false;
+            } else {
+                errorHandler.hide();
+            }
+        }
+
+        return true;
     }
 
     if (dropZone) {
@@ -47,35 +101,15 @@
             e.preventDefault();
             this.className = 'upload-drop-zone';
             var files = e.dataTransfer.files;
-            errorHandler.hide();
 
-            if (files.length > 1) {
-                errorHandler.text('You can\'t select more than one file').show();
-                return;
+
+            if (checkFileInput(files)) {
+                $('#js-upload-files').prop('files', files);
+                setSelectedFile(files);
             } else {
-                var authorisedFileTypes = ['pdf', 'docx', 'doc'];
-
-                var found = false;
-
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-
-                    var ext = file.name.split('.').pop();
-                    if (authorisedFileTypes.indexOf(ext) === -1) {
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (found) {
-                    errorHandler.text('Only document Word or PDF can be selected').show();
-                    return;
-                } else {
-                    errorHandler.hide();
-                }
+                $('#js-upload-files').prop('files', null);
+                setSelectedFile([]);
             }
-            $('#js-upload-files').prop('files', files);
-            setSelectedFile(files);
         };
 
         dropZone.ondragover = function () {

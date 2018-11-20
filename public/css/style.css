@@ -284,6 +284,33 @@ html, body {
 .section__upload--error {
     display: none;
 }
+.file-label {
+    padding-left: 15px;
+}
+
+.file-name {
+    cursor: pointer;
+    color: #31708f;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#previewDocument .modal-dialog {
+    width: 80%;
+    height: 90%;
+}
+
+#previewDocument .modal-dialog .modal-content,
+#previewDocument .modal-dialog .modal-content .modal-body {
+    height: 100%;
+}
+
+
+
+#previewDocument .modal-dialog iframe {
+    width: 100%;
+    height: 100%;
+}
 
 /*.section__upload .upload__method {*/
 /*border: 1px solid #ccc;*/
