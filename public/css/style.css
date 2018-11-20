@@ -280,6 +280,11 @@ html, body {
 .selectWrap {
     min-height: 34px;
 }
+
+.section__upload--error {
+    display: none;
+}
+
 /*.section__upload .upload__method {*/
 /*border: 1px solid #ccc;*/
 /*padding: 7px;*/

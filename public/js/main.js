@@ -10,6 +10,7 @@
     var uploadForm = document.getElementById('js-upload-form');
     var inputFileElement = $('#js-upload-files');
     var selectedFileContainer = $('#selectedFile');
+    var errorHandler = $('.section__upload--error');
 
     var selectedFiles;
 
@@ -19,6 +20,7 @@
 
     inputFileElement.change(function (e) {
         setSelectedFile(e.target.files);
+        errorHandler.hide();
     });
 
     function setSelectedFile(files) {
@@ -40,11 +42,40 @@
     }
 
     if (dropZone) {
+
         dropZone.ondrop = function (e) {
             e.preventDefault();
             this.className = 'upload-drop-zone';
-            $('#js-upload-files').prop('files', e.dataTransfer.files);
-            setSelectedFile(e.dataTransfer.files);
+            var files = e.dataTransfer.files;
+            errorHandler.hide();
+
+            if (files.length > 1) {
+                errorHandler.text('You can\'t select more than one file').show();
+                return;
+            } else {
+                var authorisedFileTypes = ['pdf', 'docx', 'doc'];
+
+                var found = false;
+
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+
+                    var ext = file.name.split('.').pop();
+                    if (authorisedFileTypes.indexOf(ext) === -1) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    errorHandler.text('Only document Word or PDF can be selected').show();
+                    return;
+                } else {
+                    errorHandler.hide();
+                }
+            }
+            $('#js-upload-files').prop('files', files);
+            setSelectedFile(files);
         };
 
         dropZone.ondragover = function () {
