@@ -7,7 +7,7 @@ const signerPostFileUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/Vari
 
 const changeSignerStatusUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/SetSignerStatus';
 
-const smsOTPUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/SetSignerStatus';
+const smsOTPUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/smsOTP';
 
 const signatoryListUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/getListOfSigners';
 const issuerListUrl = 'https://digital-contract-app.eu-gb.mybluemix.net/getListOfIssuers';
