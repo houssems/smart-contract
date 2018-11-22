@@ -16,6 +16,12 @@
 
     var selectedFiles;
 
+    var creationDate = $('#creationDate');
+
+    if (creationDate.text()) {
+        creationDate.html(moment(creationDate.text()).format('DD/MM/YYYY HH:mm'));
+    }
+
     $('#selectFile').click(function () {
         inputFileElement.trigger('click');
     });
@@ -60,10 +66,13 @@
                 uploadContainer.addClass('invalid') :
                 uploadContainer.removeClass('invalid');
             if ($('#js-upload-form').valid() && selectedFiles && selectedFiles.length && selectedFiles.length > 0) {
+                displayLoadingBar();
                 this.submit();
             }
         });
     }
+
+    $('.loading-form').submit(displayLoadingBar);
 
     function checkFileInput(files) {
         errorHandler.hide();

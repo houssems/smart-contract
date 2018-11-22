@@ -85,7 +85,8 @@ function sendContractFileOfSigner(req, res, contractFile) {
                     docTitle: response.docTitle,
                     docDesc: response.docDesc,
                     docFingerPrint: response.docFingerPrint,
-                    hasAlreadySigned: false
+                    hasAlreadySigned: false,
+                    creationDate: response.creationDate,
                 };
 
                 result.issuer = await blockchain.findUserBy(response.docIssuer, 'ID');

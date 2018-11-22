@@ -50,7 +50,8 @@ function sendContractFileOfViewer(req, res, contractFile) {
                 const result = {
                     docTitle: response.docTitle,
                     docDesc: response.docDesc,
-                    docFingerPrint: response.docFingerPrint
+                    docFingerPrint: response.docFingerPrint,
+                    creationDate: response.creationDate,
                 };
 
                 result.issuer = await blockchain.findUserBy(response.docIssuer, 'ID');
