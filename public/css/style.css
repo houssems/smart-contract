@@ -381,12 +381,13 @@ html, body {
 }
 
 .glyphicon-check {
-    color: #d43f3a;
+    color: #1e8043;
     font-size: 20px;
 }
 
-.glyphicon-check.green-sign {
-    color: #1e8043 !important;
+.glyphicon-remove-circle {
+    color: #d43f3a;
+    font-size: 21px;
 }
 
 /*.section__upload .upload__method {*/
