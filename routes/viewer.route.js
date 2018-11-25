@@ -58,7 +58,7 @@ function sendContractFileOfViewer(req, res, contractFile) {
 
                 result.signerList = response.signerList.map(function (signer) {
                     return {
-                        docStatus: signer.docStatus,
+                        hasSigned: signer.docStatus === 'SIGNED',
                         name: signer.firstname + ' ' + signer.lastname
                     }
                 });

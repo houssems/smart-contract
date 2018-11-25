@@ -99,7 +99,7 @@ function sendContractFileOfSigner(req, res, contractFile) {
                     }
 
                     return {
-                        docStatus: signer.docStatus,
+                        hasSigned: signer.docStatus === 'SIGNED',
                         name: signer.firstname + ' ' + signer.lastname
                     }
                 });

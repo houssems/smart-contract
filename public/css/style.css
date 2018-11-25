@@ -380,6 +380,15 @@ html, body {
     }
 }
 
+.glyphicon-check {
+    color: #d43f3a;
+    font-size: 20px;
+}
+
+.glyphicon-check.green-sign {
+    color: #1e8043 !important;
+}
+
 /*.section__upload .upload__method {*/
 /*border: 1px solid #ccc;*/
 /*padding: 7px;*/

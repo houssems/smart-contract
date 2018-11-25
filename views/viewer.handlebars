@@ -42,7 +42,7 @@
             {{#each contract.signerList}}
                 <div class="row">
                     <div class="col col-md-6">{{name}}</div>
-                    <div class="col col-md-6">{{docStatus}}</div>
+                    <div class="col col-md-6"><i class="glyphicon glyphicon-check {{#if hasSigned}}green-sign{{/if}}"></i></div>
                 </div>
             {{/each}}
         </div>
