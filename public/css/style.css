@@ -390,6 +390,13 @@ html, body {
     font-size: 21px;
 }
 
+.viewer-nav {
+    display: none !important;
+}
+
+.viewer-nav.active {
+    display: block !important;
+}
 /*.section__upload .upload__method {*/
 /*border: 1px solid #ccc;*/
 /*padding: 7px;*/

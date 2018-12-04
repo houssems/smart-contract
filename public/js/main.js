@@ -59,7 +59,7 @@
     if (uploadForm) {
         uploadForm.addEventListener('submit', function (e) {
             e.preventDefault();
-
+            orderSignerList();
             var uploadContainer = $('.upload-form');
 
             (!selectedFiles || (selectedFiles && selectedFiles.length === 0)) ?
@@ -239,6 +239,37 @@
     function hideLoadingBar() {
         $('.loading-bar').hide();
     }
+
+    setNavigation();
+
+    function setNavigation() {
+
+        var path = window.location.pathname;
+        path = path.replace(/\/$/, "");
+        path = decodeURIComponent(path);
+
+        $(".nav a").each(function () {
+            var href = $(this).attr('href');
+            if (path.substring(0, href.length) === href) {
+                $(this).closest('li').addClass('active');
+            }
+        });
+    }
+
+    function orderSignerList() {
+        var signerList = $('#signataires-list');
+        if (signerList.length > 0) {
+            var firstElement = signerList.find('option:first');
+            var elements = $(".addedOption .text");
+
+            for(var i = 0; i < elements.length; i++) {
+                var elm = elements[i];
+                var option = signerList.find('option:contains("' + elm.innerText + '")');
+                $(option).insertBefore(firstElement);
+            }
+        }
+    }
+
 })(jQuery);
  
 
