@@ -21,6 +21,15 @@ router.post('/', upload.single('file'), routeUtils.isAuthenticated, function (re
 
     console.log(title, description, signers);
 
+    const metadata = {
+        originalname: file.originalname,
+        encoding: file.encoding,
+        mimetype: file.mimetype,
+        size: file.size
+    };
+
+    console.log(metadata);
+
     req.checkBody('title', 'Title is required').notEmpty();
     req.checkBody('description', 'Description is required').notEmpty();
 
@@ -34,7 +43,8 @@ router.post('/', upload.single('file'), routeUtils.isAuthenticated, function (re
         name: title,
         signers: signers,
         description: description,
-        file: file.buffer
+        file: file.buffer,
+        metadata: metadata
     };
 
     sendContractToThirdParties(req, res, contract, userId);
