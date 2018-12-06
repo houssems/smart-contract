@@ -116,33 +116,33 @@ function sendContractFileOfSigner (contractFile, callback) {
 
     console.log('sendContractFileOfSigner => ', contractRequestBuilder);
 
-    // request(contractRequestBuilder, function (error, response) {
-    //     let responseData = response;
-    //     if (response && response.body) {
-    //         try {
-    //             responseData = JSON.parse(response.body);
-    //         } catch (e) {
-    //             responseData = response.body;
-    //         }
-    //     }
-    //     callback(error, responseData);
+    request(contractRequestBuilder, function (error, response) {
+        let responseData = response;
+        if (response && response.body) {
+            try {
+                responseData = JSON.parse(response.body);
+            } catch (e) {
+                responseData = response.body;
+            }
+        }
+        callback(error, responseData);
+
+    });
+
+    // const responseData = {
+    //     "docTitle": "ttttt",
+    //     "docDesc": "tttttt",
+    //     "docIssuer": "5be5d4f36e6f21133c4fb995",
+    //     "signerList": [ {
+    //         "docStatus": "NOT_SIGNED",
+    //         "signerId": "5be360dcf95a7e1068c54395"
+    //     }, {
+    //         "docStatus": "SIGNED",
+    //         "signerId": "f11c4f57-8373-4eff-acfa-c0514e04466f"
+    //     }],
+    // };
     //
-    // });
-
-    const responseData = {
-        "docTitle": "ttttt",
-        "docDesc": "tttttt",
-        "docIssuer": "5be5d4f36e6f21133c4fb995",
-        "signerList": [ {
-            "docStatus": "NOT_SIGNED",
-            "signerId": "5be360dcf95a7e1068c54395"
-        }, {
-            "docStatus": "SIGNED",
-            "signerId": "f11c4f57-8373-4eff-acfa-c0514e04466f"
-        }],
-    };
-
-    callback(null, responseData);
+    // callback(null, responseData);
 };
 
 
